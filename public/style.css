@@ -1,0 +1,9 @@
+#map{
+  height: 500px;
+  background: gray;
+}
+input{
+  margin-bottom: 15px;
+  width: 100%;
+  font-size: 14pt;
+}

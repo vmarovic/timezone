@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body ng-app='app'>
+  <form method="post" ng-controller='inputLocationController'
+    ng-submit='submit(city)'>
+    <input ng-model='city'>
+  </form>
+  <div id="map"></div>
+  <script type="text/javascript", src='/socket.io/socket.io.js'></script>
+  <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5SRBfcHzbNWy7Bj9Ia27WoCTRRy8dGhU&libraries=places"></script>
+  <script type="text/javascript" src="angular.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+  
+</body>
