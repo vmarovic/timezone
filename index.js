@@ -22,7 +22,6 @@ server.route({
   path: '/timezone',
   handler: function (request, reply) {
     db.find().exec(function(err, timezones){
-      console.log(timezones);
       reply(null, timezones);
     });
   }
@@ -40,7 +39,6 @@ server.route({
       if(!place){
         getTimezone(request.payload.lat, request.payload.lng,
           function (timezone) {
-            console.log(timezone);
             var tz = new db();
             tz.placeId = request.payload.placeId;
             tz.location = {lat: request.payload.lat, lng: request.payload.lng};
@@ -57,6 +55,26 @@ server.route({
     });
   }
 });
+server.route({
+  method: 'DELETE',
+  path: '/timezone/:id',
+  handler: function (request, reply) {
+    db.findByIdAndRemove({request.params.id}, function (err) {
+      reply();
+    });
+  }
+});
+
+server.route({
+  method: 'GET',
+  path: '/timezone/:id',
+  handler: function (request, reply) {
+    db.findById({request.params.id}, function (err, item) {
+      reply(item);
+    });
+  }
+});
+
 
 // Make call to google api and get timezone info
 var getTimezone = function (lat, lng, cb) {
@@ -71,7 +89,6 @@ var getTimezone = function (lat, lng, cb) {
   };
 
   var req = https.request(options, function (res) {
-    console.log(res.statusCode);
     res.on('data', function (d) {
       str += d;
     });
