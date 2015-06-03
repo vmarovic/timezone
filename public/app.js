@@ -38,6 +38,8 @@ app.controller('inputLocationController', function($scope, geocode, map, $http){
     for(var i = 0; i < data.length; i++){
       map.placeItem(data[i]);
     }
+  }).error( function () {
+    alert('error')
   });
   $scope.submit = function (city) {
     geocode(city, function (geo) {
