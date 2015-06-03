@@ -3,6 +3,7 @@ var Hapi = require('hapi');
 var server = new Hapi.Server();
 server.connection({ port: 3000, labels: ['timezone'] });
 
+// Serve static folder
 server.route({
   method: 'GET',
   path: '/{param*}',
@@ -13,10 +14,11 @@ server.route({
   }
 });
 
+// Register our plugin
 server.register({
   register: require('./timezonePlugin'),
   options:{ 
-    googleMapsKey: 'AIzaSyB8QOhutNAeuO3Nxmx2fzSk5QASCoTOySc' 
+    googleMapsKey: 'AIzaSyB8QOhutNAeuO3Nxmx2fzSk5QASCoTOySc'
   }
 }, function (err) {
   if(err) console.error('Failed to load plugin');

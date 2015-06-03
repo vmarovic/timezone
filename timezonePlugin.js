@@ -6,8 +6,10 @@ var socketIo = require('socket.io');
 var timezonePlugin = {
   register: function (server, options, next) {
     var api = server.select('timezone');
+    // Socket support
     var io = socketIo(server.listener);
 
+    // Get all locations for the map
     api.route({
       method: 'GET',
       path: '/timezone',
@@ -19,6 +21,9 @@ var timezonePlugin = {
       }
     });
 
+    // Check if location exists in db
+    // Unless it is there call google timezone api and fetch timezone
+    // Save new data to db
     api.route({
       method: 'POST',
       path: '/timezone',
@@ -59,6 +64,7 @@ var timezonePlugin = {
       }
     });
 
+    // Delete location from db by mongo id
     api.route({
       method: 'DELETE',
       path: '/timezone/{id}',
@@ -71,6 +77,7 @@ var timezonePlugin = {
       }
     });
 
+    // Get specific location from db (by mongo id)
     api.route({
       method: 'GET',
       path: '/timezone/{id}',
