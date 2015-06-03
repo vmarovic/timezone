@@ -57,7 +57,7 @@ server.route({
 });
 server.route({
   method: 'DELETE',
-  path: '/timezone/:id',
+  path: '/timezone/{id}',
   handler: function (request, reply) {
     db.findByIdAndRemove({request.params.id}, function (err) {
       reply();
@@ -67,7 +67,7 @@ server.route({
 
 server.route({
   method: 'GET',
-  path: '/timezone/:id',
+  path: '/timezone/{id}',
   handler: function (request, reply) {
     db.findById({request.params.id}, function (err, item) {
       reply(item);
