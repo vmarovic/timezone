@@ -5,7 +5,6 @@ var socketIo = require('socket.io');
 
 var timezonePlugin = {
   register: function (server, options, next) {
-    console.log('Options are:', options);
     var api = server.select('timezone');
     var io = socketIo(server.listener);
 
@@ -31,7 +30,8 @@ var timezonePlugin = {
         }
 
         db.findOne({placeId: request.payload.placeId}, function(err, place){
-          if(err) return reply(Boom.badImplementation(['Database error'], [err]));
+          if(err) return reply(
+              Boom.badImplementation(['Database error'], [err]));
           if(!place){
             getTimezone(request.payload.lat, request.payload.lng,
               function (timezone) {
@@ -41,7 +41,10 @@ var timezonePlugin = {
                 }
                 var tz = new db();
                 tz.placeId = request.payload.placeId;
-                tz.location = {lat: request.payload.lat, lng: request.payload.lng};
+                tz.location = {
+                  lat: request.payload.lat,
+                  lng: request.payload.lng
+                };
                 tz.name = request.payload.name;
                 tz.timezone = timezone.timeZoneName;
                 tz.save( function (err, savedTz) {
@@ -61,7 +64,8 @@ var timezonePlugin = {
       path: '/timezone/{id}',
       handler: function (request, reply) {
         db.findByIdAndRemove(request.params.id, function (err) {
-          if(err) return reply(Boom.badImplementation(['Database error'], [err]));
+          if(err) return reply(
+              Boom.badImplementation(['Database error'], [err]));
           reply();
         });
       }
@@ -72,7 +76,8 @@ var timezonePlugin = {
       path: '/timezone/{id}',
       handler: function (request, reply) {
         db.findById(request.params.id, function (err, item) {
-          if(err) return reply(Boom.badImplementation(['Database error'], [err]));
+          if(err) return reply(
+              Boom.badImplementation(['Database error'], [err]));
           reply(item);
         });
       }
