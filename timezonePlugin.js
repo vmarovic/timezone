@@ -5,6 +5,7 @@ var socketIo = require('socket.io');
 
 var timezonePlugin = {
   register: function (server, options, next) {
+    console.log('Options are:', options);
     var api = server.select('timezone');
     var io = socketIo(server.listener);
 
@@ -69,16 +70,16 @@ var timezonePlugin = {
   // Make call to google api and get timezone info
   var getTimezone = function (lat, lng, cb) {
     var str = '';
-    var options = {
+    var httpsOptions = {
       host: 'maps.googleapis.com',
       path:'/maps/api/timezone/json?location=' +
         lat + ',' + lng + '&timestamp=' + Math.floor(Date.now()/1000) +
-        '&key=AIzaSyB8QOhutNAeuO3Nxmx2fzSk5QASCoTOySc',
+        '&key=' + options.googleMapsKey,
       method: 'GET',
       port: 443
     };
 
-    var req = https.request(options, function (res) {
+    var req = https.request(httpsOptions, function (res) {
       res.on('data', function (d) {
         str += d;
       });

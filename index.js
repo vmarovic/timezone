@@ -13,7 +13,12 @@ server.route({
   }
 });
 
-server.register({register: require('./timezonePlugin')}, function (err) {
+server.register({
+  register: require('./timezonePlugin'),
+  options:{ 
+    googleMapsKey: 'AIzaSyB8QOhutNAeuO3Nxmx2fzSk5QASCoTOySc' 
+  }
+}, function (err) {
   if(err) console.error('Failed to load plugin');
 });
 
